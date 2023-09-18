@@ -15,23 +15,23 @@ Before installing the "ip" command, ensure you have the following prerequisites:
 1. Clone the GitHub Repository:
    Open your terminal and run the following command to clone the GitHub repository:
 
-git clone https://github.com/SpartianKing/ipcommand
+`git clone https://github.com/SpartianKing/ipcommand`
 
 
 2. Navigate to the Repository:
 Change your working directory to the cloned repository:
 
-cd ipcommand
+`cd ipcommand`
 
 3. Make the installscript Executable:
 Use the command below to do this!:
 
-chmod 777 install.sh
+`chmod 777 install.sh`
 
 4. Now execute the installer:
 This can be done, by executing the command below:
 
-cd ipcommand
+`./install.sh`
 
 
 This will display your public IP address in the terminal.
