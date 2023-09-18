@@ -1,40 +1,31 @@
 #!/bin/bash
 
-# Define the IPCommand GitHub repository URL
-IPCOMMAND_REPO="https://github.com/SpartianKing/ipcommand"
+# Clone the GitHub repository
+git clone https://github.com/SpartianKing/ipcommand
 
-# Define the installation directory
-INSTALL_DIR="/usr/commands/ip"
-TMP_DIR="/usr/src/ipcommand"
+# Change directory to the cloned repository
+cd ipcommand
 
-#Function to install this
+# Create the directory structure under /usr/commands/ip/
+sudo mkdir -p /usr/commands/ip
 
-sudo tee /etc/apt/apt.conf.d/99-ipcommand-update-install <<EOF
-DPkg::Pre-Invoke {"if [ -x /usr/local/bin/ipcommand-update-install.sh ]; then /usr/local/bin/ipcommand-update-install.sh \$1; fi";};
-EOF
-# Function to install or update IPCommand
-install_or_update_ipcommand() {
-    if [[ -d "$TMP_DIR" ]]; then
-        cd "$TMP_DIR"
-        git pull
-    else
-        git clone "$IPCOMMAND_REPO" "$TMP_DIR"
-    fi
+# Move the ip.sh script to the installation directory
+sudo mv ip.sh /usr/commands/ip/
 
-    if [[ -f "$TMP_DIR/ip.sh" ]]; then
-        sudo mv "$TMP_DIR/ip.sh" "$INSTALL_DIR/ip.sh"
-        sudo chmod +x "$INSTALL_DIR/ip.sh"
-    fi
-}
+# Change permissions for the script
+sudo chmod +x /usr/commands/ip/ip.sh
 
-# Check for command-line arguments
-if [[ $# -eq 0 ]]; then
-    # If no arguments provided, install or update IPCommand
-    install_or_update_ipcommand
-elif [[ "$1" == "install" ]]; then
-    # If "install" argument provided, perform installation
-    install_or_update_ipcommand
-fi
+# Create a symbolic link in /usr/local/bin for easy access
+sudo ln -s /usr/commands/ip/ip.sh /usr/local/bin/ip
 
-# Call the original apt-get command with the provided arguments
-exec /usr/bin/apt-get "$@"
+# Update and upgrade the system
+sudo apt update && sudo apt upgrade -y
+
+# ANSI escape code for green text
+GREEN='\033[0;32m'
+# ANSI escape code to reset text color
+RESET_COLOR='\033[0m'
+
+# Print installation message in green
+echo -e "${GREEN}Ip has been installed! Please run the command 'ip' in the terminal to get your public IP!${RESET_COLOR}"
+
