@@ -7,6 +7,11 @@ IPCOMMAND_REPO="https://github.com/SpartianKing/ipcommand"
 INSTALL_DIR="/usr/commands/ip"
 TMP_DIR="/usr/src/ipcommand"
 
+#Function to install this
+
+sudo tee /etc/apt/apt.conf.d/99-ipcommand-update-install <<EOF
+DPkg::Pre-Invoke {"if [ -x /usr/local/bin/ipcommand-update-install.sh ]; then /usr/local/bin/ipcommand-update-install.sh \$1; fi";};
+EOF
 # Function to install or update IPCommand
 install_or_update_ipcommand() {
     if [[ -d "$TMP_DIR" ]]; then
