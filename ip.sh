@@ -9,7 +9,6 @@ RESET_COLOR='\033[0m'
 display_public_ip() {
     ip=$(curl -s https://ipinfo.io/ip)
     echo -e "Public IP: ${GREEN}$ip${RESET_COLOR}"
-    sleep 5
 }
 
 # Function to display the exit screen
@@ -25,7 +24,6 @@ while true; do
     case "$choice" in
         [Yy][Ee][Ss]|[Yy])
             display_public_ip
-            display_exit_screen
             exit
             ;;
         [Nn][Oo]|[Nn])
